@@ -1,1 +1,822 @@
-sdf
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>View Projects</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+  <style>
+    *,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+
+}
+
+
+main {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 2rem;
+  background-color: #f5f5f5;
+  font-family: "Inter", sans-serif;
+}
+@media (max-width: 60em) {
+  body {
+    padding: 3rem;
+  }
+}
+
+.grid {
+  display: grid;
+  width: 114rem;
+  grid-gap: 6rem;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  align-items: start;
+}
+@media (max-width: 60em) {
+  .grid {
+    grid-gap: 3rem;
+  }
+}
+.grid__item {
+  background-color: #fff;
+  border-radius: 0.4rem;
+  overflow: hidden;
+  box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: 0.2s;
+}
+.grid__item:hover {
+  transform: translateY(-0.5%);
+  box-shadow: 0 4rem 8rem rgba(0, 0, 0, 0.2);
+}
+
+.card__img {
+  display: block;
+  width: 100%;
+  height: 18rem;
+  object-fit: cover;
+}
+.card__content {
+  padding: 3rem 3rem;
+}
+.card__header {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #0d0d0d;
+  margin-bottom: 1.5rem;
+}
+.card__text {
+  font-size: 1.5rem;
+  letter-spacing: 0.1rem;
+  line-height: 1.7;
+  color: #3d3d3d;
+  margin-bottom: 2.5rem;
+}
+.card__btn {
+  display: block;
+  width: 100%;
+  padding: 1.5rem;
+  font-size: 2rem;
+  text-align: center;
+  color: #3363ff;
+  background-color: #e6ecff;
+  border: none;
+  border-radius: 0.4rem;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.card__btn span {
+  margin-left: 1rem;
+  transition: 0.2s;
+}
+.card__btn:hover, .card__btn:active {
+  background-color: #dce4ff;
+}
+.card__btn:hover span, .card__btn:active span {
+  margin-left: 1.5rem;
+}
+
+/* popup window  */
+
+.main {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+
+  transform: translate(-50%, -50%);
+  
+  
+  background-color: #fdfcfc;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000;
+  border-radius: 7px;
+  box-shadow: -4px -4px 20px rgba(0, 0, 0, 0.505);
+  margin:  auto;
+    height: 90%;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  
+
+}
+p {
+text-indent: 50px;
+text-align: justify;
+letter-spacing: 2px;
+}
+.top-card {
+  width: 100%;
+  /* height: 200px; */
+}
+
+.top-card img {
+  width: 100%;
+  animation-name: image-fade-in;
+  animation-duration: 2s;
+
+ 
+  border-radius: cover;
+  border-color: #000;
+  
+}
+
+
+
+/* Define the animation */
+@keyframes image-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Apply the animation to the image */
+
+
+
+h1 {
+  font-size: 22px;
+  color: #000;
+  font-weight: 600;
+  margin: 12px 0;
+  text-align: center;
+
+}
+
+
+.middle-card, footer {
+  margin: 5px 25px;
+}
+
+.middle-card {
+  text-align: justify;
+}
+
+footer {
+  text-align: center;
+
+}
+
+footer .social-icon {
+  /* padding: 7%; */
+  font-size: 20px;
+  margin: 0 5%;
+  color: rgba(0, 0, 0, .9);
+}
+
+.facebook:hover {color:#3b5999;}
+.twitter:hover {color: #55acee;}
+.google:hover {color: #dd4b39;}
+.github:hover {color: #302f2f;}
+.linkedin:hover {color: #0077B5;}
+
+footer .links {
+  border-top: 2px solid rgba(0, 0, 0, .1);
+  text-align: center;
+  margin-top: 8px;
+  padding: 6px 0;
+
+}
+
+
+
+.bt{
+width: 110px;
+height: 37px;
+margin-top: 10px;
+border-radius: 2px;
+background: #1990cc;
+font-size: 15px;
+border: none;
+color: white;
+}
+.bt:last-child{
+margin-left: 40px;
+border: 2px solid #1990cc;
+background: white;
+color: black;
+}
+
+
+
+.scroll {
+  display: none;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border: 2px solid #333;
+  border-radius: 50%;
+  position: relative;
+  animation: down 1.5s infinite;
+  -webkit-animation: down 1.5s infinite;
+}
+.scroll::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 18px;
+  width: 18px;
+  height: 18px;
+  border-left: 2px solid #333;
+  border-bottom: 2px solid #333;
+  transform: rotate(-45deg);
+}
+
+@keyframes down {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translateY(15px);
+  }
+  40% {
+    transform: translate(0);
+  }
+}
+@-webkit-keyframes down {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translateY(15px);
+  }
+  40% {
+    transform: translate(0);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===========================
+   ====== Search Box ====== 
+   =========================== */
+
+
+
+/* ===========================
+   ====== Search Box ====== 
+   =========================== */
+
+   .search
+   {
+     border: 2px solid #CF5C3F;
+     overflow: auto;
+     border-radius: 5px;
+     -moz-border-radius: 5px;
+     -webkit-border-radius: 5px;
+   }
+   
+   .search input[type="text"]
+   {
+     border: 0px;
+     width: 50%;
+     padding: 10px 10px;
+   }
+   
+   .search input[type="text"]:focus
+   {
+     outline: 0;
+   }
+   
+   .search input[type="submit"]
+   {
+     border: 0px;
+     background: none;
+     background-color: #CF5C3F;
+     color: #fff;
+     float: right;
+     padding: 10px;
+    
+     -moz-border-radius-top-right: 5px;
+     -webkit-border-radius-top-right: 5px;
+    
+     -moz-border-radius-bottom-right: 5px;
+     -webkit-border-radius-bottom-right: 5px;
+           cursor:pointer;
+   }
+   
+   /* ===========================
+      ====== Medua Query for Search Box ====== 
+      =========================== */
+   
+   @media only screen and (min-width : 150px) and (max-width : 780px)
+   {
+  
+     .search
+     {
+       width: 95%;
+       margin: 0 auto;
+     }
+   
+   }
+
+
+/* no result page */
+
+/*======================
+    404 page
+=======================*/
+
+
+
+
+.animate-charcter {
+  text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #231557 0%,
+    #44107a 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+ 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+  font-size: 50px;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
+
+
+.running-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #ccc;
+  overflow: hidden;
+  max-width: 800px; /* Change this to whatever value you want */
+}
+
+
+.scrolling-text {
+  position: relative;
+  white-space: nowrap;
+  font-size: 14px;
+  animation: scroll 19s linear infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+  </style>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html class="no-js" lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="An example pen showing how a basic CSS Grid container can create a nice, responsive card layout.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>View Projects</title>
+  </head>
+</html>
+<header>
+
+  <center><h3 class="animate-charcter">Projects</h3>
+    <div class="running-bar">
+      <div class="scrolling-text" id="scrolling-text">
+        This is some scrolling text that will run inside the bar.
+      </div>
+    </div>
+  
+  
+  
+  </center>
+
+</header>
+<div class="search">
+  
+  
+    <input type="text" id="search"  placeholder="Search for Student Name , Project Name , Technologies Used , Skills , Upload Date (Tip: Press Enter For Dekstop Users)" >
+    <input type="submit" onclick="searchdata()" id="btsearch"  value="Search">
+  
+ 
+</div>
+
+<main>
+
+<div class="grid" id="grid">
+
+   
+</div>
+
+</main>
+
+
+
+
+
+
+
+<!-- partial -->
+
+
+<!-- popup window -->
+
+<main class="main" id="main">
+ <center><div  class="scroll" id="scroll"></div></center> 
+  <section class="top-card">
+    <img  id="sphoto">
+    <div class="menu-icon">
+      
+    </div>
+
+  </section>
+
+  <section class="middle-card">
+    <h1  id="sname" ></h1>
+<hr>
+
+  
+<center> <b> <span  id="pname">Payment Gateway Using Django</span> </p></b>
+     <hr>
+     
+  <b> <p>Project Description :- </b>
+    
+     <br>
+      <span id="pdes"></span> </p>
+     <hr>
+  
+<b>  <p>Technologies Used :- </b>
+    
+     <br>
+  <span id="ptech"></span> </p>
+<hr>
+  
+<b>  <p>Skills :- </b>
+    
+     <br>
+    <span id="skills">AI,machine</span> </p>
+  <hr>
+  </section>
+
+  <footer>
+    <h1>Contact</h1>
+
+    <a href="#" id="github" class="social-icon github"><i class="fab fa-github"></i></a>
+    <a href="#" id="linkdin" class="social-icon linkedin"><i class="fab fa-linkedin"></i></a>
+
+  
+
+    <section class="links">
+ 
+<button class="bt" id="source" >Source Code</button>
+<button class="bt" id="demo">Project Demo</button>
+     
+<center><button onclick="hide('main')" class="bt">Close</button>
+    </section>
+  </footer>
+</main>
+</div>
+</div>
+<script src="data.js"></script>
+<script>
+  var show = function(id) {
+   document.getElementById(id).style.display ='block';
+ }
+ var hide = function(id) {
+   document.getElementById(id).style.display ='none';
+ }
+ </script>
+
+
+<script>
+    var button = document.getElementById("btsearch");
+var textBox = document.getElementById('search');
+textBox.addEventListener("keyup", function (event) {
+            if (event.keyCode == 13) {
+                button.click();
+            }
+        });
+</script>
+
+<script>
+  function fetchQuote() {
+    fetch('https://api.quotable.io/random')
+      .then(response => response.json())
+      .then(data => {
+        const quote = document.getElementById('scrolling-text');
+        quote.textContent = data.content
+        
+      });
+  }
+  
+  fetchQuote(); // Fetch initial quote
+  
+  setInterval(fetchQuote, 18000); // Fetch new quote every 5 seconds
+  </script>
+
+
+<script>
+
+if (screen.width<1024) {
+  
+    const n = document.getElementById('running-bar')
+    n.innerHTML= ""
+   }
+</script>
+
+<script>
+  
+  function createcard(sname, pname, update, pdes, ptech, skills, pimg, sphoto, linkdin, github, source, demo) {
+  // create elements
+  const gridItem = document.createElement('div');
+  gridItem.classList.add('grid__item');
+
+  const card = document.createElement('div');
+  card.classList.add('card');
+
+  const img = document.createElement('img');
+  img.classList.add('card__img');
+  img.setAttribute('src', pimg);
+
+
+  const cardContent = document.createElement('div');
+  cardContent.classList.add('card__content');
+
+
+  const header1 = document.createElement('h1');
+  header1.classList.add('card__header');
+  header1.innerText = 'Project Name :- ';
+
+  const projectName = document.createElement('span');
+  projectName.innerText = pname;
+
+  header1.appendChild(projectName);
+
+  const hr1 = document.createElement('hr');
+
+  const br1 = document.createElement('br');
+
+  const header2 = document.createElement('h1');
+  header2.classList.add('card__header');
+  header2.innerText = 'Student Name :- ';
+
+  const studentName = document.createElement('span');
+  studentName.innerText = sname
+
+  header2.appendChild(studentName);
+
+  const hr2 = document.createElement('hr');
+
+  const br2 = document.createElement('br');
+
+  const header3 = document.createElement('h1');
+  header3.classList.add('card__header');
+  header3.innerText = 'Uploaded On :- ';
+
+  const udate = document.createElement('span');
+  udate.innerText = update;
+
+  header3.appendChild(udate);
+
+  const btn = document.createElement('button');
+  btn.classList.add('card__btn');
+  btn.innerText = 'Show Details ';
+  btn.onclick = function () {
+    const img1 = document.getElementById('sphoto');
+
+    img1.setAttribute('src', sphoto);
+    document.getElementById('scroll').style.display = "block"
+    setTimeout(() => {
+      const box = document.getElementById('scroll');
+
+      // 👇️ removes element from DOM
+      box.style.display = 'none';
+
+      // 👇️ hides element (still takes up space on page)
+      // box.style.visibility = 'hidden';
+    }, 1500);
+
+    document.getElementById('main').style.display = "block"
+
+    document.getElementById('sname').textContent = sname
+    document.getElementById('pname').textContent = pname
+    document.getElementById('pdes').textContent = pdes
+    document.getElementById('ptech').textContent = ptech
+    document.getElementById('skills').textContent = skills
+    document.getElementById('linkdin').setAttribute('href', linkdin)
+    document.getElementById('github').setAttribute('href', github)
+    document.getElementById('source').onclick = function () {
+      window.open(source, '_self')
+    }
+    document.getElementById('demo').onclick = function () {
+      window.open(demo, '_self')
+    }
+
+  }
+  const span = document.createElement('span');
+  span.innerHTML = '&rarr;';
+  btn.appendChild(span);
+
+  // append elements to parent
+
+  cardContent.appendChild(header1);
+  cardContent.appendChild(hr1);
+  cardContent.appendChild(br1);
+  cardContent.appendChild(header2);
+  cardContent.appendChild(hr2);
+  cardContent.appendChild(br2);
+  cardContent.appendChild(header3);
+  cardContent.appendChild(btn);
+
+  card.appendChild(img);
+  card.appendChild(cardContent);
+
+  gridItem.appendChild(card);
+
+  // add to DOM
+  const container = document.querySelector('.grid'); // replace with the appropriate selector for your HTML
+  container.appendChild(gridItem);
+
+}
+
+// Send a GET request to the github to retrieve data
+fetch('https://codephotonofficial.github.io/projectsdatabase/individualprojects.json')
+  .then(response => response.json()) // Parse the response as JSON
+  .then(data => {
+
+      // Sort the data by a specific parameter, e.g. "name"
+      data.sort((a, b) => (a.udate < b.udate) ? 1 : -1);
+      
+
+    data.forEach(item => {
+      
+
+      // Do something with the sorted data
+      
+      
+
+      createcard(item.sname, item.pname, item.udate, item.pdes, item.ptech, item.skills, item.pimg, item.sphoto, item.linkdin, item.github, item.source, item.demo)
+
+    });
+  })
+  .catch(error => console.error(error));
+
+
+// search button click
+
+function searchdata()
+{
+ 
+  var da = document.getElementById('search').value;
+  
+  const grid = document.getElementById('grid')
+  grid.innerHTML = ""
+  
+  
+  if(da != '')
+  {
+    
+    
+  
+    searching(da)
+    
+  }
+
+
+  else
+  {
+    location.reload()
+  }
+}
+
+
+function searching(keyword)
+{
+
+ 
+// Fetch data from API endpoint
+fetch('https://codephotonofficial.github.io/projectsdatabase/individualprojects.json')
+  .then(response => response.json())
+  .then(data => {
+    
+    // Filter data based on search criteria
+    const searchCriteria1 = keyword;
+
+    const studentname = capitalize(searchCriteria1);
+
+    const filter = data.filter(item => item.sname.includes(studentname) || item.pname.includes(studentname) || item.ptech.includes(studentname) || item.ptech.includes(searchCriteria1.toLowerCase()) || item.skills.includes(studentname) || item.pname.includes(searchCriteria1.toLowerCase()) || item.skills.includes(searchCriteria1.toLowerCase()) || item.sname.includes(searchCriteria1.toLowerCase()) || item.udate.includes(searchCriteria1.toLowerCase()));
+    for (let index = 0; index < filter.length; index++) {
+      createcard(filter[index].sname, filter[index].pname, filter[index].udate, filter[index].pdes, filter[index].ptech, filter[index].skills, filter[index].pimg, filter[index].sphoto, filter[index].linkdin, filter[index].github, filter[index].source, filter[index].demo)
+
+      
+    }
+
+  })
+  .catch(error => console.error(error));
+
+ 
+
+
+}
+
+
+
+// Capital each word 
+
+const capitalize = str => {
+  // split the string into an array of words
+  const words = str.split(" ");
+  // loop through each word and capitalize its first letter
+  const capitalizedWords = words.map(word =>
+    word.charAt(0).toUpperCase() + word.slice(1)
+  );
+  // join the capitalized words back into a string
+  return capitalizedWords.join(" ");
+};
+
+
+var approvedDomains = ["codephoton.com", "www.codephoton.com","https://www.codephoton.com/"];
+
+// Get the current page's referrer
+var referrer = document.referrer;
+
+// Check if the referrer is empty or not from an approved domain
+if (!referrer || !approvedDomains.includes(getDomainFromUrl(referrer))) {
+  // If not, redirect the user to a different page
+  window.location.href = "https://codephoton.com";
+}
+
+// Helper function to extract the domain from a URL
+function getDomainFromUrl(url) {
+  var domain;
+  // find & remove protocol (http, ftp, etc.) and get domain
+  if (url.indexOf("://") > -1) {
+    domain = url.split('/')[2];
+  } else {
+    domain = url.split('/')[0];
+  }
+  // find & remove port number
+  domain = domain.split(':')[0];
+  return domain;
+}
+
+
+
+  
+</script>
+
+
+  
+</body>
+</html>
